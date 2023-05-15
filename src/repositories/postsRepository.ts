@@ -1,5 +1,6 @@
 import {postViewModel} from "../models/postViewModel";
 import {blogViewModel} from "../models/blogViewModel";
+import {blogsRepository} from "./blogsRepository";
 
 let postsDB: postViewModel[] = [];
 
@@ -17,13 +18,14 @@ export const postsRepository = {
     },
 
     createNewPost(body: postViewModel) {
+        const blogNameById = blogsRepository.findBlogById(String(body.blogId))?.name!;
         const newPost: postViewModel = {
             id: (+(new Date())).toString(),
             title: body.title,
             shortDescription: body.shortDescription,
             content: body.content,
             blogId: body.blogId,
-            blogName: body.blogName
+            blogName: blogNameById,
         }
         postsDB.push(newPost)
         return newPost
@@ -36,7 +38,6 @@ export const postsRepository = {
             foundPost.shortDescription = body.shortDescription
             foundPost.content = body.content
             foundPost.blogId = body.blogId
-            foundPost.blogName = body.blogName
             return true;
         }
         else return false;
