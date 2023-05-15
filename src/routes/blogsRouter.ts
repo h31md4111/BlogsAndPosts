@@ -20,4 +20,29 @@ blogsRouter.get('/:id', (req:Request, res:Response) => {
     res.status(200).send(foundBlog);
     });
 
+blogsRouter.post('/',
+    basicAuthMiddleware,
+    blogsValidationMiddleware,
+    errorsGetter,
+    (req: Request, res: Response) => {
+    const newBlog = blogsRepository.createNewBlog(req.body)
+        if(!newBlog) res.sendStatus(400)
+        res.status(201).send(newBlog)
+    })
+
+blogsRouter.put('/:id',
+    basicAuthMiddleware,
+    blogsValidationMiddleware,
+    errorsGetter,
+    (req: Request, res: Response) => {
+    const isUpdated = blogsRepository.updateBlogById(req.params.id, req.body)
+        if (!isUpdated) res.sendStatus(404)
+        res.sendStatus(204)
+    })
+
+blogsRouter.delete('/:id', basicAuthMiddleware, (req: Request, res: Response) => {
+    const isDeleted = blogsRepository.deleteBlogById(req.params.id)
+    if (!isDeleted) res.sendStatus(404)
+    res.sendStatus(204)
+})
 
