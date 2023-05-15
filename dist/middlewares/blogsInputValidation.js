@@ -9,7 +9,7 @@ exports.blogsValidationMiddleware = [
     (0, express_validator_1.body)(name)
         .exists()
         .withMessage('name is not defined')
-        .isLength({ min: 3, max: 35 })
+        .isLength({ min: 3, max: 15 })
         .withMessage('incorrect length of name field'),
     (0, express_validator_1.body)(description)
         .exists()

@@ -8,7 +8,7 @@ export const blogsValidationMiddleware = [
     body(name)
         .exists()
         .withMessage('name is not defined')
-        .isLength({min:3, max:35})
+        .isLength({min:3, max:15})
         .withMessage('incorrect length of name field'),
     body(description)
         .exists()
