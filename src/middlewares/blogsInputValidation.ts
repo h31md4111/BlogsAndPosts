@@ -20,7 +20,7 @@ export const blogsValidationMiddleware = [
         .withMessage('websiteUrl is not defined')
         .isLength({min:3, max:100})
         .withMessage('incorrect length of websiteUrl field')
-        .matches('^https://([a-zA-Z0-9_-]+\\.)+[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*\\/?$\n')
+        .matches('^https://([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$')
         .withMessage('incorrect Url address')
 
 ]
