@@ -14,7 +14,7 @@ exports.postsRouter.get('/:id', (req, res) => {
     const isFound = postsRepository_1.postsRepository.findPostById(req.params.id);
     if (!isFound)
         res.sendStatus(404);
-    res.status(201).send(isFound);
+    res.status(200).send(isFound);
 });
 exports.postsRouter.post('/', basicAuth_1.basicAuthMiddleware, postsInputValidation_1.postsValidationMiddleware, errorsGetter_1.errorsGetter, (req, res) => {
     const newPost = postsRepository_1.postsRepository.createNewPost(req.body);

@@ -14,7 +14,7 @@ postsRouter.get('/', (req: Request, res: Response) => {
 postsRouter.get('/:id', (req: Request, res: Response) => {
     const isFound = postsRepository.findPostById(req.params.id)
     if (!isFound) res.sendStatus(404)
-    res.status(201).send(isFound)
+    res.status(200).send(isFound)
 })
 
 postsRouter.post('/', basicAuthMiddleware, postsValidationMiddleware, errorsGetter, (req: Request, res: Response) => {
