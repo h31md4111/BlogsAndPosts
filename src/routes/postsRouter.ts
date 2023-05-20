@@ -18,7 +18,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
 postsRouter.post('/', basicAuthMiddleware, postsValidationMiddleware, errorsGetter, (req: Request, res: Response) => {
     const newPost = postsRepository.createNewPost(req.body)
     if (!newPost) res.sendStatus(400)
-    res.sendStatus(204)
+    res.sendStatus(201).send(newPost)
 })
 
 postsRouter.put('/:id',basicAuthMiddleware, postsValidationMiddleware, errorsGetter, (req: Request, res: Response) => {

@@ -1,35 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postsRepository = exports.clearPostsDB = void 0;
-const blogsRepository_1 = require("./blogsRepository");
-let postsDB = [];
+exports.postsRepository = exports.clearPostsDB = exports.postsDB = void 0;
+exports.postsDB = [];
 const clearPostsDB = () => {
-    postsDB = [];
+    exports.postsDB = [];
 };
 exports.clearPostsDB = clearPostsDB;
 exports.postsRepository = {
     getAllPosts() {
-        return postsDB;
+        return exports.postsDB;
     },
     findPostById(id) {
-        return postsDB.find(p => p.id === id);
+        return exports.postsDB.find(p => p.id === id);
     },
     createNewPost(body) {
-        var _a;
-        const blogNameById = (_a = blogsRepository_1.blogsRepository.findBlogById(String(body.blogId))) === null || _a === void 0 ? void 0 : _a.name;
         const newPost = {
             id: (+(new Date())).toString(),
             title: body.title,
             shortDescription: body.shortDescription,
             content: body.content,
             blogId: body.blogId,
-            blogName: blogNameById,
+            blogName: body.blogName
         };
-        postsDB.push(newPost);
+        exports.postsDB.push(newPost);
         return newPost;
     },
     updatePostById(id, body) {
-        const foundPost = postsDB.find(p => p.id === id);
+        const foundPost = exports.postsDB.find(p => p.id === id);
         if (foundPost) {
             foundPost.title = body.title;
             foundPost.shortDescription = body.shortDescription;
@@ -41,9 +38,9 @@ exports.postsRepository = {
             return false;
     },
     deletePostById(id) {
-        for (let i = 0; i < postsDB.length; i++) {
-            if (postsDB[i].id === id) {
-                postsDB.splice(i, 1);
+        for (let i = 0; i < exports.postsDB.length; i++) {
+            if (exports.postsDB[i].id === id) {
+                exports.postsDB.splice(i, 1);
                 return true;
             }
         }

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.blogsRepository = exports.clearBlogsDB = void 0;
-let blogsDB = [];
+exports.blogsRepository = exports.clearBlogsDB = exports.blogsDB = void 0;
+exports.blogsDB = [];
 const clearBlogsDB = () => {
-    blogsDB = [];
+    exports.blogsDB = [];
 };
 exports.clearBlogsDB = clearBlogsDB;
 exports.blogsRepository = {
     getAllBlogs() {
-        return blogsDB;
+        return exports.blogsDB;
     },
     findBlogById(id) {
-        return blogsDB.find(b => b.id === id);
+        return exports.blogsDB.find(b => b.id === id);
     },
     createNewBlog(body) {
         const newBlog = {
@@ -20,11 +20,11 @@ exports.blogsRepository = {
             description: body.description,
             websiteUrl: body.websiteUrl
         };
-        blogsDB.push(newBlog);
+        exports.blogsDB.push(newBlog);
         return newBlog;
     },
     updateBlogById(id, body) {
-        const foundBlog = blogsDB.find(b => b.id === id);
+        const foundBlog = exports.blogsDB.find(b => b.id === id);
         if (foundBlog) {
             foundBlog.name = body.name;
             foundBlog.description = body.description;
@@ -35,9 +35,9 @@ exports.blogsRepository = {
             return false;
     },
     deleteBlogById(id) {
-        for (let i = 0; i < blogsDB.length; i++) {
-            if (blogsDB[i].id === id) {
-                blogsDB.splice(i, 1);
+        for (let i = 0; i < exports.blogsDB.length; i++) {
+            if (exports.blogsDB[i].id === id) {
+                exports.blogsDB.splice(i, 1);
                 return true;
             }
         }

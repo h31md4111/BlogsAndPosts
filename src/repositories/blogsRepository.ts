@@ -1,6 +1,6 @@
 import {blogViewModel} from "../models/blogViewModel";
 
-let blogsDB: blogViewModel[] = [];
+export let blogsDB: blogViewModel[] = [];
 
 export const clearBlogsDB = (): void => {
     blogsDB = [];

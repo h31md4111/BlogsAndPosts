@@ -20,7 +20,7 @@ exports.postsRouter.post('/', basicAuth_1.basicAuthMiddleware, postsInputValidat
     const newPost = postsRepository_1.postsRepository.createNewPost(req.body);
     if (!newPost)
         res.sendStatus(400);
-    res.sendStatus(204);
+    res.sendStatus(201).send(newPost);
 });
 exports.postsRouter.put('/:id', basicAuth_1.basicAuthMiddleware, postsInputValidation_1.postsValidationMiddleware, errorsGetter_1.errorsGetter, (req, res) => {
     const isUpdated = postsRepository_1.postsRepository.updatePostById(req.params.id, req.body);
