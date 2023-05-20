@@ -18,15 +18,19 @@ exports.postsRouter.get('/:id', (req, res) => {
 });
 exports.postsRouter.post('/', basicAuth_1.basicAuthMiddleware, postsInputValidation_1.postsValidationMiddleware, errorsGetter_1.errorsGetter, (req, res) => {
     const newPost = postsRepository_1.postsRepository.createNewPost(req.body);
-    if (!newPost)
+    if (!newPost) {
         res.sendStatus(400);
-    res.sendStatus(201).send(newPost);
+    }
+    else {
+        res.status(201).json(newPost);
+    }
 });
 exports.postsRouter.put('/:id', basicAuth_1.basicAuthMiddleware, postsInputValidation_1.postsValidationMiddleware, errorsGetter_1.errorsGetter, (req, res) => {
     const isUpdated = postsRepository_1.postsRepository.updatePostById(req.params.id, req.body);
+    const UpdatedPost = postsRepository_1.postsRepository.findPostById(req.body.id);
     if (!isUpdated)
         res.sendStatus(404);
-    res.sendStatus(204);
+    res.sendStatus(204).send(UpdatedPost);
 });
 exports.postsRouter.delete('/:id', basicAuth_1.basicAuthMiddleware, (req, res) => {
     const isDeleted = postsRepository_1.postsRepository.deletePostById(req.params.id);

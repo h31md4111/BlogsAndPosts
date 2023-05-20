@@ -3,6 +3,8 @@ import {postsRepository, clearPostsDB} from "../repositories/postsRepository";
 import {basicAuthMiddleware} from "../middlewares/basicAuth";
 import {postsValidationMiddleware} from "../middlewares/postsInputValidation";
 import {errorsGetter} from "../middlewares/errorsGetter";
+import {postViewModel} from "../models/postViewModel";
+
 export const postsRouter = Router();
 
 postsRouter.get('/', (req: Request, res: Response) => {
@@ -16,15 +18,19 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
 })
 
 postsRouter.post('/', basicAuthMiddleware, postsValidationMiddleware, errorsGetter, (req: Request, res: Response) => {
-    const newPost = postsRepository.createNewPost(req.body)
-    if (!newPost) res.sendStatus(400)
-    res.sendStatus(201).send(newPost)
+    const newPost: postViewModel = postsRepository.createNewPost(req.body)
+    if (!newPost) {
+        res.sendStatus(400)
+    } else {
+        res.status(201).json(newPost)
+    }
 })
 
 postsRouter.put('/:id',basicAuthMiddleware, postsValidationMiddleware, errorsGetter, (req: Request, res: Response) => {
     const isUpdated = postsRepository.updatePostById(req.params.id, req.body)
+    const UpdatedPost = postsRepository.findPostById(req.body.id);
     if (!isUpdated) res.sendStatus(404)
-    res.sendStatus(204)
+    res.sendStatus(204).send(UpdatedPost)
 })
 
 postsRouter.delete('/:id', basicAuthMiddleware, (req: Request, res: Response) => {

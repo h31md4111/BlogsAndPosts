@@ -20,13 +20,14 @@ export const postsRepository = {
     },
     
     createNewPost(body: postViewModel) {
+        const blogNameById = blogsRepository.findBlogById(body.blogId)?.name
         const newPost: postViewModel = {
             id: (+(new Date())).toString(),
             title: body.title,
             shortDescription: body.shortDescription,
             content: body.content,
             blogId: body.blogId,
-            blogName: body.blogName
+            blogName: blogNameById || ''
         }
         postsDB.push(newPost)
         return newPost
